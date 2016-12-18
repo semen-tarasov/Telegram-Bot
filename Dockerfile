@@ -28,7 +28,7 @@ RUN pip install -r /app/requirements.txt
 EXPOSE 80
 
 # Set the default directory where CMD will execute
-WORKDIR /src
+WORKDIR /app
 
 # Set the default command to execute
 # when creating a new container
