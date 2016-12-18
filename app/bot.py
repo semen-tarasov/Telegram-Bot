@@ -3,7 +3,7 @@
 import requests
 import telebot
 
-from app import config
+import config
 
 bot = telebot.TeleBot(config.token)
 
