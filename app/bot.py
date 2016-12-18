@@ -40,16 +40,19 @@ def _get_categories_hashtags(categories_list):
 
 @bot.message_handler(commands=['joke'])
 def get_best_random_joke_from_sgm(message):
-    url = SICKIGRAM_BASE_URL + 'p/rand'
-    args = {'c': 5, 'd': 0}
-    result = requests.post(url, data=args).json()
-    jokes = sorted(result['posts'], key=lambda x: x['score'], reverse=True)
-    best_joke = jokes[0]
-    joke = "{title}\n\n{text}".format(**best_joke)
-    categories = _get_categories_hashtags(best_joke['categories'])
-    if categories:
-        joke += '\n\n{}'.format(categories)
-    bot.send_message(message.chat.id, joke)
+    try:
+        url = SICKIGRAM_BASE_URL + 'p/rand'
+        args = {'c': 5, 'd': 0}
+        result = requests.post(url, data=args).json()
+        jokes = sorted(result['posts'], key=lambda x: x['score'], reverse=True)
+        best_joke = jokes[0]
+        joke = "{title}\n\n{text}".format(**best_joke)
+        categories = _get_categories_hashtags(best_joke['categories'])
+        if categories:
+            joke += '\n\n{}'.format(categories)
+        bot.send_message(message.chat.id, joke)
+    except Exception:
+        bot.send_message(message.chat.id, 'sorry!')
 
 if __name__ == '__main__':
     bot.polling()
